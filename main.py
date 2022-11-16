@@ -3,16 +3,11 @@ import urlextract
 import re
 
 
-def parse():
+def parse(string):
     dict = {}
-    n = input("Введите количество передаваемых строк: ")
-    if n.isdigit():
-        n = int(n)
-    else:
-        print("Некорректный ввод количества строк")
-        return None
-    for i in range(n):
-        url = input("Введите URL: ")
+    lst = [i.strip(" ") for i in string.split("\n")]
+    for i in lst:
+        url = i
         extractor = urlextract.URLExtract()
         urls = extractor.find_urls(url)
         if not urls:
@@ -47,5 +42,9 @@ def parse():
     if dict:
         print(dict)
 
+if  __name__ == '__main__':
+    parse(input("Введите строки: "))
 
-parse()
+
+
+
