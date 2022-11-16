@@ -5,7 +5,12 @@ import re
 
 def parse():
     dict = {}
-    n = int(input("Введите количество передаваемых строк: "))
+    n = input("Введите количество передаваемых строк: ")
+    if n.isdigit():
+        n = int(n)
+    else:
+        print("Некорректный ввод количества строк")
+        return None
     for i in range(n):
         url = input("Введите URL: ")
         extractor = urlextract.URLExtract()
@@ -13,7 +18,7 @@ def parse():
         if not urls:
             print(f"Строка {url} не является ссылкой")
             continue
-        elif re.match(r'https?://',url) is None:
+        elif re.match(r'https?://', url) is None:
             print("URL введен некорректно")
             continue
         dict[url] = {}
