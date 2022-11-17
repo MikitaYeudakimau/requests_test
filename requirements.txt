@@ -1,9 +1,20 @@
-certifi==2022.9.24
-charset-normalizer==2.1.1
-filelock==3.8.0
-idna==3.4
-platformdirs==2.5.4
-requests==2.28.1
-uritools==4.0.0
-urlextract==1.7.1
-urllib3==1.26.12
+attrs==22.1.0 ; python_version >= "3.10" and python_version < "4.0"
+certifi==2022.9.24 ; python_version >= "3.10" and python_version < "4"
+charset-normalizer==2.1.1 ; python_version >= "3.10" and python_version < "4"
+colorama==0.4.6 ; python_version >= "3.10" and python_version < "4.0" and sys_platform == "win32"
+coverage[toml]==6.5.0 ; python_version >= "3.10" and python_version < "4.0"
+exceptiongroup==1.0.4 ; python_version >= "3.10" and python_version < "3.11"
+filelock==3.8.0 ; python_version >= "3.10" and python_version < "4.0"
+idna==3.4 ; python_version >= "3.10" and python_version < "4"
+iniconfig==1.1.1 ; python_version >= "3.10" and python_version < "4.0"
+packaging==21.3 ; python_version >= "3.10" and python_version < "4.0"
+platformdirs==2.5.4 ; python_version >= "3.10" and python_version < "4.0"
+pluggy==1.0.0 ; python_version >= "3.10" and python_version < "4.0"
+pyparsing==3.0.9 ; python_version >= "3.10" and python_version < "4.0"
+pytest-cov==4.0.0 ; python_version >= "3.10" and python_version < "4.0"
+pytest==7.2.0 ; python_version >= "3.10" and python_version < "4.0"
+requests==2.28.1 ; python_version >= "3.10" and python_version < "4"
+tomli==2.0.1 ; python_version >= "3.10" and python_full_version <= "3.11.0a6"
+uritools==4.0.0 ; python_version >= "3.10" and python_version < "4.0"
+urlextract==1.7.1 ; python_version >= "3.10" and python_version < "4.0"
+urllib3==1.26.12 ; python_version >= "3.10" and python_version < "4"

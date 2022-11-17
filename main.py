@@ -5,7 +5,7 @@ import re
 
 def parse(string):
     dict = {}
-    lst = [i.strip(" ") for i in string.split("\n")]
+    lst = [i.strip(" ") for i in string.split(",")]
     for i in lst:
         url = i
         extractor = urlextract.URLExtract()
@@ -43,7 +43,7 @@ def parse(string):
         print(dict)
 
 if  __name__ == '__main__':
-    parse(input("Введите строки: "))
+    parse(input("Введите URL через запятую: "))
 
 
 
