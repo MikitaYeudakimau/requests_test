@@ -5,15 +5,6 @@ import urlextract
 import re
 
 
-# http_methods = {
-#     'GET': requests.get(url),
-#     'POST': requests.post(url),
-#     'PUT': requests.put(url),
-#     'DELETE': requests.delete(url),
-#     'HEAD': requests.head(url),
-#     'PATCH': requests.patch(url),
-#     'OPTION': requests.options(url),
-# }
 def check_name(string):
     sites = {}
     lst = [i.strip(" ") for i in string.split(",")]
@@ -22,48 +13,59 @@ def check_name(string):
         extractor = urlextract.URLExtract()
         urls = extractor.find_urls(url)
         if not urls:
-            print(f"Строка {url} не является ссылкой")
+            print(f"String {url} isn't right link")
             continue
         elif re.match(r'https?://', url) is None:
-            print("URL введен некорректно")
+            print("URL is written uncorrectly")
             continue
         sites[url] = {}
     return sites
 
+
+def check_response_status(url, method, func):
+    if method == "GET":
+        try:
+            response = func(url, 5)
+        except:
+            print(f"Check '{url}' for right spelling ")
+            return False
+    else:
+        response = func(url)
+        if response.status_code != 405:
+            return response.status_code
+        else:
+            return None
+
+
 def check_http(dict):
+    http_methods = {
+        'GET': lambda url, timeout: requests.get(url, timeout=timeout),
+        'POST': lambda url: requests.post(url),
+        'PUT': lambda url: requests.put(url),
+        'DELETE': lambda url: requests.delete(url),
+        'HEAD': lambda url: requests.head(url),
+        'PATCH': lambda url: requests.patch(url),
+        'OPTION': lambda url: requests.options(url),
+    }
     for url in dict.keys():
-        response = requests.get(url)
-        if response.status_code != 405:
-            dict[url]['GET'] = response.status_code
-        response = requests.post(url)
-        if response.status_code != 405:
-            dict[url]['POST'] = response.status_code
-        response = requests.put(url)
-        if response.status_code != 405:
-            dict[url]['PUT'] = response.status_code
-        response = requests.delete(url)
-        if response.status_code != 405:
-            dict[url]['DELETE'] = response.status_code
-        response = requests.head(url)
-        if response.status_code != 405:
-            dict[url]['HEAD'] = response.status_code
-        response = requests.patch(url)
-        if response.status_code != 405:
-            dict[url]['PATCH'] = response.status_code
-        response = requests.options(url)
-        if response.status_code != 405:
-            dict[url]['OPTIONS'] = response.status_code
+        for method, func in http_methods.items():
+            response_status = check_response_status(url, method, func)
+            if response_status is False:
+                break
+            elif response_status is None:
+                continue
+            dict[url][method] = response_status
     return dict
+
 
 def parse(string):
     t1 = time.time()
     sites = check_name(string)
     dict = check_http(sites)
-    t2 = time.time()
-    dt = t2 - t1
-    if dict:
-        print(dict)
-        print(dt)
+    checked_dict = {k: v for k, v in dict.items() if v != {}}
+    if checked_dict:
+        print(checked_dict)
+        print(f"Runtime time: {time.time() - t1}")
 
 
 if __name__ == '__main__':
