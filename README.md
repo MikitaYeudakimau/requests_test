@@ -1,12 +1,7 @@
 # Request_test
 
-В проекте использовал дополнительно библиотеки **requests** и **urlextract** для определения url-адреса.
-Покрытие тестами проекта - **98%**.
+This script takes input string, splits it in list, checks for URL right spelling and all available 
+HTTP methods and their status codes, except 405 status, with the response in JSON format 
 
-По поводу времени выполенения:
-1) Poetry раньше не использовал, разобраться заняло дополнительно 1-2 часа;
-2) В плане тестов пользовался только в Django и DRF встроенной библиотекой; pytest и coverage 
-дополнительно заняло 1 час + на тестах остановился больше нужного, так как продумывал вид входных данных,
-3) Cам код и тесты суммарно 1.5 часа.
-
+In soon will be added async.
 
