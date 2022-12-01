@@ -19,7 +19,6 @@ def check_name(string):
             print("URL is written uncorrectly")
             continue
         sites.append(url)
-    print(sites)
     return sites
 
 
@@ -35,16 +34,15 @@ async def check_http(url):
             'PATCH': lambda url: session.patch(url),
             'OPTION': lambda url: session.options(url),
         }
-        for method, func in http_methods.items():
-            response = await func(url)
-            status = response.status
-            print(status)
-            if status != 405:
-                allowed_methods[method] = status
-        dict = {}
-        dict[url] = allowed_methods
-        print(dict)
-        return dict
+        tasks = []
+        for func in http_methods.values():
+            response = asyncio.create_task(func(url))
+            tasks.append(response)
+        responses = await asyncio.gather(*tasks)
+        result = tuple(zip(http_methods.keys(), (i.status for i in responses)))
+        result = dict(filter(lambda x: x[1] != 405, result))
+        allowed_methods[url] = result
+        return allowed_methods
 
 
 async def parse(sites):
